@@ -36,7 +36,7 @@ Cada poder se recarga en 20 segundos.
 
 - **Láser:** dispara en línea recta hasta la siguiente pared y elimina a los fantasmas que alcanza.
 - **Teletransporte:** te lleva a una casilla aleatoria, lejos de los fantasmas si es posible.
-- **Mina:** se coloca en tu casilla y explota al contacto. **También te afecta a ti.**
+- **Mina:** se coloca en tu casilla y explota cuando un fantasma la pisa. Te afecta a ti solo si vuelves a pisarla después de haberte alejado.
 
 ### Dificultad
 
@@ -64,12 +64,7 @@ No necesita instalación, servidor ni conexión. Descarga el repositorio y abre 
 | `pacman-game.js` | Lógica del juego |
 | `index.html` | Redirige a `game.html` para GitHub Pages |
 | `docs/screenshots/` | Capturas de este README |
-| `splash.*`, `index.css`, `hooks/`, `global.ts`, `module.d.ts` | Restos de la versión anterior para Reddit; el juego no los usa |
 
 ## Tienda
 
 La tienda está oculta por ahora y todos los poderes están disponibles. Para volver a mostrarla, cambia `SHOP_ENABLED` a `true` en `pacman-game.js`.
-
-## Problema conocido
-
-Colocar una mina cuando Pac-Man está cerca del centro de su casilla puede detonarla al instante y quitarle una vida.

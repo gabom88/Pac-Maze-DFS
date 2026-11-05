@@ -856,6 +856,8 @@ function die() {
       pac.targetY = sr.y;
       pac.dir = DIRS.R;
       pac.next = DIRS.R;
+      // Desarmar las minas para no morir otra vez si hay una en la celda de reaparición
+      mines.forEach((m) => (m.armed = false));
       // Re-spawn ghosts en celdas separadas
       const rs = findGhostSpawns(4);
       ghosts.forEach((g, i) => {
@@ -950,9 +952,9 @@ function teleportPacman() {
   SFX.teleport();
 }
 
-/** Coloca una mina en la celda donde está parado Pac-Man ahora mismo. */
+/** Coloca una mina en la celda de Pac-Man. No puede dañarlo hasta que se aleje de ella. */
 function placeMine() {
-  mines.push({ x: pac.cellX, y: pac.cellY });
+  mines.push({ x: pac.cellX, y: pac.cellY, armed: false });
   SFX.mineArm();
 }
 
@@ -967,7 +969,9 @@ function checkMines() {
   for (let i = mines.length - 1; i >= 0; i--) {
     const m = mines[i];
     const c = tileCenter(m.x, m.y);
-    const pacHit = Math.hypot(pac.x - c.cx, pac.y - c.cy) < TILE * 0.4;
+    const pacOnMine = Math.hypot(pac.x - c.cx, pac.y - c.cy) < TILE * 0.4;
+    if (!pacOnMine) m.armed = true;
+    const pacHit = pacOnMine && m.armed;
     const hitGhosts = ghosts.filter((g) => Math.hypot(g.x - c.cx, g.y - c.cy) < TILE * 0.4);
     if (!pacHit && !hitGhosts.length) continue;
     explode(c.cx, c.cy);
