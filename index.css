@@ -1,0 +1,167 @@
+@import 'tailwindcss';
+
+/* ═══════════════════════════════════════════
+   PAC-MAN SPLASH
+═══════════════════════════════════════════ */
+.pacman-splash {
+  background: #000;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.pacman-bg-dots {
+  background-image: radial-gradient(circle, #ffd70022 1.5px, transparent 2px);
+  background-size: 26px 26px;
+}
+
+.pacman-title {
+  color: #ffd700;
+  font-weight: 800;
+  font-size: clamp(24px, 8vw, 44px);
+  letter-spacing: 3px;
+  max-width: 92%;
+  text-align: center;
+  animation: pm-title-pulse 2.2s ease-in-out infinite;
+}
+
+@keyframes pm-title-pulse {
+  0%,
+  100% {
+    text-shadow:
+      0 0 8px #ffd700,
+      0 0 22px #ffd70066;
+  }
+  50% {
+    text-shadow:
+      0 0 16px #ffd700,
+      0 0 38px #ffd700cc;
+  }
+}
+
+.pacman-chase-track {
+  position: relative;
+  width: min(300px, 78vw);
+  height: 46px;
+  overflow: hidden;
+  border-radius: 8px;
+  background-image: radial-gradient(circle, #333 2px, transparent 2.5px);
+  background-size: 22px 22px;
+  background-position: 11px center;
+}
+
+.pacman-chase-runner {
+  position: absolute;
+  top: 50%;
+  left: -140px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transform: translateY(-50%);
+  animation: pm-chase-move 3.4s linear infinite;
+}
+
+@keyframes pm-chase-move {
+  0% {
+    left: -140px;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.pacman-icon {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #ffd700;
+  box-shadow: 0 0 8px #ffd70088;
+  clip-path: polygon(100% 74%, 44% 46%, 100% 21%, 100% 0, 0 0, 0 100%, 100% 100%);
+  animation: pm-chomp 0.35s infinite steps(1);
+}
+
+@keyframes pm-chomp {
+  0%,
+  100% {
+    clip-path: polygon(100% 74%, 44% 46%, 100% 21%, 100% 0, 0 0, 0 100%, 100% 100%);
+  }
+  50% {
+    clip-path: polygon(100% 50%, 100% 50%, 100% 50%, 100% 0, 0 0, 0 100%, 100% 100%);
+  }
+}
+
+.pacman-ghost {
+  position: relative;
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: 50% 50% 0 0;
+  animation: pm-ghost-float 0.6s ease-in-out infinite alternate;
+}
+
+.pacman-ghost::before {
+  content: '';
+  position: absolute;
+  top: 34%;
+  left: 18%;
+  width: 5px;
+  height: 5px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 12px 0 0 #fff;
+}
+
+.pacman-ghost::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -5px;
+  height: 7px;
+  background: inherit;
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 83% 40%, 66% 100%, 50% 40%, 33% 100%, 16% 40%, 0 100%);
+}
+
+@keyframes pm-ghost-float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-4px);
+  }
+}
+
+.pacman-play-btn {
+  padding: 14px 46px;
+  background: #ffd700;
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  cursor: pointer;
+  box-shadow: 0 0 18px #ffd70066;
+  transition:
+    transform 0.15s,
+    box-shadow 0.15s;
+  animation: pm-btn-pulse 2s ease-in-out infinite;
+}
+
+.pacman-play-btn:hover {
+  box-shadow: 0 0 26px #ffd700aa;
+}
+
+.pacman-play-btn:active {
+  transform: scale(0.96);
+}
+
+@keyframes pm-btn-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 14px #ffd70055;
+  }
+  50% {
+    box-shadow: 0 0 24px #ffd700aa;
+  }
+}
