@@ -1354,11 +1354,17 @@ function drawExplosions(dt) {
 ═══════════════════════════════════════════ */
 let controlMode = 'swipe';
 let touchOrigin = null;
+const SWIPE_MIN_PX = 20;
 document.addEventListener(
   'touchstart',
   (e) => {
     initAudio();
     if (controlMode !== 'swipe') return;
+    // Toques sobre botones (powerups, menú, tienda) no son deslizamientos.
+    if (e.target.closest && e.target.closest('#overlay, #shop, .pw-btn, button')) {
+      touchOrigin = null;
+      return;
+    }
     if (e.touches[0]) touchOrigin = { x: e.touches[0].clientX, y: e.touches[0].clientY };
   },
   { passive: false }
@@ -1370,12 +1376,14 @@ document.addEventListener(
     if (controlMode !== 'swipe' || !touchOrigin) return;
     const dx = e.changedTouches[0].clientX - touchOrigin.x;
     const dy = e.changedTouches[0].clientY - touchOrigin.y;
+    touchOrigin = null;
+    // Un toque sin arrastre (dx=dy=0) caía en DIRS.U; exigir distancia mínima.
+    if (Math.hypot(dx, dy) < SWIPE_MIN_PX) return;
     if (Math.abs(dx) > Math.abs(dy)) {
       pac.next = dx > 0 ? DIRS.R : DIRS.L;
     } else {
       pac.next = dy > 0 ? DIRS.D : DIRS.U;
     }
-    touchOrigin = null;
   },
   { passive: false }
 );
